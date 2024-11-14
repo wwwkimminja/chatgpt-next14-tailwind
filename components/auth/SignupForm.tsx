@@ -1,5 +1,5 @@
 'use client';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { FormCard } from './FormCard';
@@ -8,8 +8,12 @@ import { useFormValidate } from '@/hooks/useFormValidate';
 import { SignUpSchema } from '@/schema/auth';
 import { TSignUpFormError } from '@/types/form';
 import { FormMessage } from './FormMessage';
+import { useFormState } from 'react-dom';
+import { signUp } from '@/actions/signup';
+import toast from 'react-hot-toast';
 
 export function SignUpForm() {
+  const [error, action] = useFormState(signUp, undefined);
   const { errors, validateField } =
     useFormValidate<TSignUpFormError>(SignUpSchema);
 
@@ -18,12 +22,18 @@ export function SignUpForm() {
     validateField(name, value);
   };
 
+  useEffect(() => {
+    if (error?.erroMessage) {
+      toast.error(error.erroMessage);
+    }
+  }, [error]);
+
   return (
     <FormCard
       title="Sign Up"
       footer={{ label: 'Do you already have an account?', href: '/login' }}
     >
-      <form className="space-y-6">
+      <form className="space-y-6" action={action}>
         {/* name */}
         <div className="space-y-1">
           <Label htmlFor="name">name</Label>

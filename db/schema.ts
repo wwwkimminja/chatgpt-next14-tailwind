@@ -1,4 +1,3 @@
-import { conversation } from './schema';
 import { relations } from 'drizzle-orm';
 import { pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
 export const user = pgTable('user', {
