@@ -3,7 +3,7 @@ import { jwtVerify, SignJWT } from 'jose';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-const secretKey = process.env.SECRET_KEY;
+const secretKey = process.env.SESSION_SECRET;
 //convert to byte array for using jose
 const encodedKey = new TextEncoder().encode(secretKey);
 
@@ -27,7 +27,7 @@ export const verify = async (session: string | undefined = '') => {
     });
     return payload;
   } catch (error) {
-    console.error('failed to verify session');
+    console.error('failed to verify session:', error);
   }
 };
 
