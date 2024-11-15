@@ -23,6 +23,7 @@ export function LoginForm() {
   };
 
   useEffect(() => {
+    console.log(error);
     if (error?.errorMessage) {
       toast.error(error.errorMessage);
     }
