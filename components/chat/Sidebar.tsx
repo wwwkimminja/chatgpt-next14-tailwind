@@ -24,7 +24,7 @@ const DUMMY_ITEMS = [
     label:
       "Argument of type 'string' is not assignable to parameter of type 'AnyTable<{ name: string; }>'.",
     icon: <MessageSquare />,
-    href: `${CHAT_ROUTES.CONVERSATIONS}/1`,
+    href: `${CHAT_ROUTES.CONVERSATIONS}/2`,
   },
 ];
 export function Sidebar() {
