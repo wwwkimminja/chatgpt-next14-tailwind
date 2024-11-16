@@ -1,3 +1,4 @@
+import { Header } from '@/components/chat/Header';
 import { Sidebar } from '@/components/chat/Sidebar';
 
 export default function ChatLayout({
@@ -12,8 +13,10 @@ export default function ChatLayout({
         <Sidebar />
       </div>
       {/* Header + char area */}
-      <div></div>
-      <div>{children}</div>
+      <div className="flex flex-col flex-1 h-full">
+        <Header />
+        {children}
+      </div>
     </div>
   );
 }
