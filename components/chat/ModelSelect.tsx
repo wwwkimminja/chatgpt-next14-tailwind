@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/select';
 import { useModelStore } from '@/store/model';
 
-const MODELS = ['ChatGPT-3.5-turbo', 'ChatGPT-4', 'ChatGPT-4o'];
+const MODELS = ['gpt-3.5-turbo', 'gpt-4', 'gpt-4o'];
 
 export function ModelSelect() {
   const { model: currentModel, updateModel } = useModelStore();
