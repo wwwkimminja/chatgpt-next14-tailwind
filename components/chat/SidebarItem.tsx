@@ -8,11 +8,14 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Ellipsis, Pencil, Trash } from 'lucide-react';
-import { usePathname } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useSheetStore } from '@/store/sheet';
-import { updateConversation } from '@/actions/conversation';
+import { deleteConversation, updateConversation } from '@/actions/conversation';
 import toast from 'react-hot-toast';
+import { useModalStore } from '@/store/modal';
+import { ModalFooter } from '../modal/ModalFooter';
+import { BASE_URL } from '@/constants/routes';
 
 type Props = {
   item: {
@@ -25,10 +28,13 @@ type Props = {
 export function SidebarItem({ item }: Props) {
   const { id, href, icon, label } = item;
   const pathname = usePathname();
+  const params = useParams<{ conversationId: string }>();
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [value, setValue] = useState(item.label);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { openModal, closeModal } = useModalStore();
 
   const setOpen = useSheetStore((state) => state.setOpen);
 
@@ -40,10 +46,34 @@ export function SidebarItem({ item }: Props) {
     setIsMenuOpen((prev) => !prev);
   };
 
+  const handleDelete = async () => {
+    try {
+      await deleteConversation(id);
+      toast.success('Deleted successfully');
+      if (params.conversationId === id) {
+        router.push(BASE_URL);
+      }
+      closeModal();
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to delete.');
+    }
+  };
   const clickEdit = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     setIsEditMode(true);
     setIsMenuOpen(false);
+  };
+
+  const clickDelete = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+
+    //Modal
+    openModal({
+      title: 'Are you sure you want to delete this?',
+      description: 'Deleted data cannot be recovered',
+      footer: <ModalFooter onCancel={closeModal} onConfirm={handleDelete} />,
+    });
   };
 
   const handleBlur = async () => {
@@ -53,7 +83,7 @@ export function SidebarItem({ item }: Props) {
         await updateConversation(id, value);
       } catch (error) {
         console.error(error);
-        toast.error('failed edit');
+        toast.error('Failed to edit');
       }
     }
   };
@@ -66,13 +96,12 @@ export function SidebarItem({ item }: Props) {
     }
   };
 
-  useEffect(()=>{
-    if(isEditMode && inputRef.current){
+  useEffect(() => {
+    if (isEditMode && inputRef.current) {
       inputRef.current.focus();
     }
-  },[isEditMode])
+  }, [isEditMode]);
 
- 
   return (
     <Link
       href={href}
@@ -120,7 +149,7 @@ export function SidebarItem({ item }: Props) {
               <Pencil size={18} />
               Edit
             </DropdownMenuItem>
-            <DropdownMenuItem className="gap-2">
+            <DropdownMenuItem className="gap-2" onClick={clickDelete}>
               <Trash size={18} />
               Delete
             </DropdownMenuItem>
