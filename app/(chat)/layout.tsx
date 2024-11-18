@@ -1,5 +1,6 @@
 import { Header } from '@/components/chat/Header';
 import { Sidebar } from '@/components/chat/Sidebar';
+import { UserProvider } from '@/components/chat/userProvider';
 
 export default function ChatLayout({
   children,
@@ -7,6 +8,7 @@ export default function ChatLayout({
   children: React.ReactNode;
 }) {
   return (
+    <UserProvider>
     <div className="md:flex h-full">
       {/* side bar */}
       <div className="hidden md:block w-[300px]">
@@ -18,5 +20,6 @@ export default function ChatLayout({
         {children}
       </div>
     </div>
+    </UserProvider>
   );
 }

@@ -11,6 +11,7 @@ import { useModelStore } from '@/store/model';
 import { useParams, useRouter } from 'next/navigation';
 import { addMessages, createConversation } from '@/actions/conversation';
 import { CHAT_ROUTES } from '@/constants/routes';
+import { useUserStore } from '@/store/user';
 
 type Props = {
   initialMessages?: TMessage[];
@@ -19,6 +20,8 @@ type Props = {
 export function Chat({ initialMessages }: Props) {
   const router = useRouter();
   const params = useParams<{ conversationId: string }>();
+  const { user } = useUserStore();
+
   const { messages, input, handleInputChange, handleSubmit, setMessages } =
     useChat({
       onFinish: async (message) => {
@@ -55,14 +58,14 @@ export function Chat({ initialMessages }: Props) {
     <div className="flex flex-col w-[80%] h-full mx-auto">
       {/* chat area */}
       <div className="flex-1 ">
-        {messages.length === 0 ? (
+        {!params.conversationId && messages.length === 0 ? (
           <Empty />
         ) : (
           <>
             {messages.map((message) => (
               <Message
                 key={message.id}
-                name={'user'}
+                name={user.name}
                 content={message.content}
                 role={message.role}
               />
