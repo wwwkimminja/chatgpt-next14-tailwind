@@ -4,5 +4,9 @@
 - shadcn-ui
 - tailwind-css
 - zustand
+- openai api
+- drizzle-orm
+- zod
 
 ## Deploy on Vercel
+https://chatgpt-clone-dun-pi.vercel.app/
