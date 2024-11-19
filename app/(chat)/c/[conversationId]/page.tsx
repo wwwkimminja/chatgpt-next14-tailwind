@@ -12,5 +12,5 @@ export default async function ConversationPage({
 }: Props) {
   const messages = await getMessageByConversation(conversationId);
 
-  return <Chat initialMessages={messages}/>;
+  return <Chat initialMessages={messages} />;
 }

@@ -9,17 +9,17 @@ export default function ChatLayout({
 }) {
   return (
     <UserProvider>
-    <div className="md:flex h-full">
-      {/* side bar */}
-      <div className="hidden md:block w-[300px]">
-        <Sidebar />
+      <div className="md:flex h-full">
+        {/* side bar */}
+        <div className="hidden md:block w-[300px]">
+          <Sidebar />
+        </div>
+        {/* Header + char area */}
+        <div className="flex flex-col flex-1 h-full overflow-y-auto">
+          <Header />
+          {children}
+        </div>
       </div>
-      {/* Header + char area */}
-      <div className="flex flex-col flex-1 h-full overflow-y-auto">
-        <Header />
-        {children}
-      </div>
-    </div>
     </UserProvider>
   );
 }

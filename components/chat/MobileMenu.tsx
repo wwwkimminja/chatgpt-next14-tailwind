@@ -1,6 +1,5 @@
 'use client';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Sidebar } from './Sidebar';
 import { Menu } from 'lucide-react';
 import { useSheetStore } from '@/store/sheet';
 

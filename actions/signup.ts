@@ -35,7 +35,6 @@ export const signUp = async (_: any, formData: FormData) => {
 
     //3.insert DB
     await db.insert(user).values({ name, email, password: hashedPassword });
-
   } catch (error) {
     console.error('error', error);
     return {
@@ -43,6 +42,5 @@ export const signUp = async (_: any, formData: FormData) => {
     };
   }
 
-  redirect('/login')
-    
+  redirect('/login');
 };

@@ -12,8 +12,8 @@ type Action = {
 // Create your store, which includes both state and (optionally) actions
 const useUserStore = create<State & Action>((set) => ({
   user: {
-    id:"",
-    name:""
+    id: '',
+    name: '',
   },
   updateUser: (user) => set(() => ({ user })),
 }));

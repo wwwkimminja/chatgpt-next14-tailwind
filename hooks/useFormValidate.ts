@@ -6,12 +6,12 @@ export function useFormValidate<T>(schema: ZodObject<ZodRawShape>) {
   const validateField = (name: string, value: string) => {
     setErrors({
       ...errors,
-      [name]:undefined
-    })
+      [name]: undefined,
+    });
     const parsedValue = schema.pick({ [name]: true }).safeParse({
       [name]: value,
     });
-    
+
     if (!parsedValue.success) {
       setErrors({ ...errors, ...parsedValue.error.flatten().fieldErrors });
     }
